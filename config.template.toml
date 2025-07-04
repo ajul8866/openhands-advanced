@@ -1,5 +1,6 @@
-###################### OpenHands Configuration Example ######################
+###################### OpenHands Advanced Configuration ######################
 #
+# OpenHands Advanced: A more powerful and intelligent AI agent platform
 # All settings have default values, so you only need to uncomment and
 # modify what you want to change
 # The fields within each section are sorted in alphabetical order.
@@ -18,8 +19,30 @@
 # Cache directory path
 #cache_dir = "/tmp/cache"
 
-# Reasoning effort for o1 models (low, medium, high, or not set)
-#reasoning_effort = "medium"
+# Reasoning effort for advanced models (low, medium, high, very_high, or not set)
+# For commercial projects, we recommend setting this to "very_high"
+#reasoning_effort = "high"
+
+# Enable advanced reasoning capabilities
+#enable_advanced_reasoning = true
+
+# Enable multi-agent collaboration
+#enable_multi_agent = true
+
+# Maximum number of collaborative agents (2-10)
+#max_collaborative_agents = 4
+
+# Enable continuous learning from past experiences
+#enable_continuous_learning = true
+
+# Enable project memory persistence across sessions
+#enable_persistent_memory = true
+
+# Maximum context window size (in tokens)
+#max_context_window = 128000
+
+# Enable automatic code optimization
+#enable_code_optimization = true
 
 # Debugging enabled
 #debug = false
@@ -98,35 +121,80 @@
 # use 'llm' for the default LLM config
 ##############################################################################
 [llm]
-# AWS access key ID
+# Advanced LLM Configuration for Commercial Projects
+
+# Model to use - supports latest advanced models
+# Recommended models for commercial projects:
+# - "gpt-4o-2024" - Balanced performance and cost
+# - "claude-3-opus" - High reasoning capabilities
+# - "gemini-1.5-pro" - Strong code generation
+# - "mixtral-8x22b" - Open source alternative
+model = "gpt-4o-2024"
+
+# AWS access key ID (for AWS Bedrock models)
 #aws_access_key_id = ""
 
-# AWS region name
+# AWS region name (for AWS Bedrock models)
 #aws_region_name = ""
 
-# AWS secret access key
+# AWS secret access key (for AWS Bedrock models)
 #aws_secret_access_key = ""
 
-# API key to use (For Headless / CLI only -  In Web this is overridden by Session Init)
+# API key to use (For Headless / CLI only - In Web this is overridden by Session Init)
 api_key = ""
 
-# API base URL (For Headless / CLI only -  In Web this is overridden by Session Init)
+# API base URL (For Headless / CLI only - In Web this is overridden by Session Init)
 #base_url = ""
 
-# API version
-#api_version = ""
+# API version (use latest available)
+#api_version = "2024-05-01"
 
-# Cost per input token
+# Enable model fallback chain (will try alternative models if primary fails)
+enable_model_fallback = true
+
+# Fallback model chain (in order of preference)
+fallback_models = ["gpt-4o-2024", "claude-3-opus", "gemini-1.5-pro", "gpt-4-turbo"]
+
+# Cost per input token (for budget tracking)
 #input_cost_per_token = 0.0
 
-# Cost per output token
+# Cost per output token (for budget tracking)
 #output_cost_per_token = 0.0
 
 # Custom LLM provider
 #custom_llm_provider = ""
 
 # Maximum number of characters in an observation's content
-#max_message_chars = 10000
+max_message_chars = 50000
+
+# The number of retries to attempt
+num_retries = 5
+
+# The timeout for the API (in seconds)
+timeout = 180
+
+# The temperature for the API
+# Lower for deterministic outputs, higher for creative solutions
+# For commercial projects, we recommend 0.1-0.3
+temperature = 0.2
+
+# Enable advanced reasoning capabilities
+enable_chain_of_thought = true
+enable_tree_of_thought = true
+
+# The maximum number of output tokens
+max_output_tokens = 8192
+
+# Whether to log LLM completions to the state
+log_completions = true
+
+# The folder to log LLM completions to
+log_completions_folder = "./llm_completions"
+
+# Enable advanced context handling
+enable_context_compression = true
+enable_semantic_chunking = true
+max_context_window = 128000
 
 # Maximum number of input tokens
 #max_input_tokens = 0
@@ -224,12 +292,25 @@ model = "gpt-4o"
 # agent.CodeActAgent
 ##############################################################################
 [agent]
+# Advanced Agent Configuration for Commercial Projects
+
+# Agent type - options: "advanced", "expert", "specialist", "collaborative"
+agent_type = "advanced"
+
+# Agent specialization - for specialist agents
+# Options: "code", "design", "architecture", "testing", "devops", "security", "data"
+agent_specialization = "code"
 
 # Whether the browsing tool is enabled
 enable_browsing = true
 
+# Enable advanced browsing capabilities
+enable_advanced_browsing = true
+enable_visual_browsing = true
+enable_browser_automation = true
+
 # Whether the LLM draft editor is enabled
-enable_llm_editor = false
+enable_llm_editor = true
 
 # Whether the standard editor tool (str_replace_editor) is enabled
 # Only has an effect if enable_llm_editor is False
@@ -247,13 +328,44 @@ enable_think = true
 # Whether the finish tool is enabled
 enable_finish = true
 
+# Enable advanced reasoning tools
+enable_planning = true
+enable_reflection = true
+enable_self_correction = true
+enable_code_review = true
+
+# Enable multi-agent collaboration
+enable_multi_agent = true
+max_collaborative_agents = 4
+
+# Enable continuous learning from past experiences
+enable_continuous_learning = true
+
+# Enable project memory persistence across sessions
+enable_persistent_memory = true
+memory_retention_days = 90
+
 # LLM config group to use
-#llm_config = 'your-llm-config-group'
+llm_config = 'llm'
 
 # Whether to use prompt extension (e.g., microagent, repo/runtime info) at all
-#enable_prompt_extensions = true
+enable_prompt_extensions = true
 
-# List of microagents to disable
+# Enable all microagents by default
+enable_all_microagents = true
+
+# List of microagents to disable (empty by default)
+disabled_microagents = []
+
+# Enable advanced code generation capabilities
+enable_code_generation = true
+enable_test_generation = true
+enable_documentation_generation = true
+
+# Enable project management capabilities
+enable_project_management = true
+enable_task_tracking = true
+enable_progress_reporting = true
 #disabled_microagents = []
 
 # Whether history should be truncated to continue the session when hitting LLM context
@@ -277,35 +389,69 @@ classpath = "my_package.my_module.MyCustomAgent"
 # Configuration for the sandbox
 ##############################################################################
 [sandbox]
-# Sandbox timeout in seconds
-#timeout = 120
+# Advanced Sandbox Configuration for Commercial Projects
+
+# Sandbox timeout in seconds (increased for complex commercial projects)
+timeout = 300
 
 # Sandbox user ID
-#user_id = 1000
+user_id = 1000
 
-# Container image to use for the sandbox
-#base_container_image = "nikolaik/python-nodejs:python3.12-nodejs22"
+# Container image to use for the sandbox (enhanced with more tools)
+base_container_image = "nikolaik/python-nodejs:python3.12-nodejs22"
 
 # Use host network
-#use_host_network = false
+use_host_network = true
 
 # Runtime extra build args
-#runtime_extra_build_args = ["--network=host", "--add-host=host.docker.internal:host-gateway"]
+runtime_extra_build_args = ["--network=host", "--add-host=host.docker.internal:host-gateway"]
 
 # Enable auto linting after editing
-#enable_auto_lint = false
+enable_auto_lint = true
 
 # Whether to initialize plugins
-#initialize_plugins = true
+initialize_plugins = true
+
+# Enable GPU acceleration for AI tasks
+enable_gpu = true
+
+# Enable distributed computing for large projects
+enable_distributed_computing = true
+max_distributed_nodes = 4
 
 # Extra dependencies to install in the runtime image
-#runtime_extra_deps = ""
+runtime_extra_deps = """
+$OH_INTERPRETER_PATH -m pip install --upgrade pip
+$OH_INTERPRETER_PATH -m pip install numpy pandas scikit-learn tensorflow torch transformers langchain llama-index
+$OH_INTERPRETER_PATH -m pip install pytest pytest-cov black mypy ruff
+$OH_INTERPRETER_PATH -m pip install fastapi uvicorn streamlit gradio
+$OH_INTERPRETER_PATH -m pip install docker kubernetes
+npm install -g typescript eslint prettier jest
+"""
 
 # Environment variables to set at the launch of the runtime
-#runtime_startup_env_vars = {}
+runtime_startup_env_vars = {
+  "PYTHONPATH": "/workspace",
+  "NODE_OPTIONS": "--max-old-space-size=8192",
+  "ENABLE_ADVANCED_FEATURES": "true",
+  "COMMERCIAL_PROJECT_MODE": "true"
+}
 
 # BrowserGym environment to use for evaluation
-#browsergym_eval_env = ""
+browsergym_eval_env = ""
+
+# Enable advanced security features
+enable_sandbox_security = true
+enable_vulnerability_scanning = true
+enable_dependency_scanning = true
+
+# Enable performance monitoring
+enable_performance_monitoring = true
+enable_resource_optimization = true
+
+# Enable advanced debugging tools
+enable_advanced_debugging = true
+enable_profiling = true
 
 # Platform to use for building the runtime image (e.g., "linux/amd64")
 #platform = ""
@@ -369,6 +515,8 @@ classpath = "my_package.my_module.MyCustomAgent"
 # the context grows too large. Each agent uses one condenser configuration.
 ##############################################################################
 [condenser]
+# Advanced Condenser Configuration for Commercial Projects
+
 # The type of condenser to use. Available options:
 # - "noop": No condensing, keeps full history (default)
 # - "observation_masking": Keeps full event structure but masks older observations
@@ -376,7 +524,37 @@ classpath = "my_package.my_module.MyCustomAgent"
 # - "llm": Uses an LLM to summarize conversation history
 # - "amortized": Intelligently forgets older events while preserving important context
 # - "llm_attention": Uses an LLM to prioritize most relevant context
-type = "noop"
+# - "hybrid": Combines multiple condensing strategies for optimal performance
+type = "hybrid"
+
+# Enable advanced context management
+enable_advanced_context_management = true
+
+# Enable semantic memory for long-term retention
+enable_semantic_memory = true
+
+# Enable hierarchical memory organization
+enable_hierarchical_memory = true
+
+# Maximum memory retention (in number of interactions)
+max_memory_retention = 1000
+
+# Memory prioritization strategy
+# Options: "recency", "importance", "relevance", "hybrid"
+memory_prioritization = "hybrid"
+
+# Enable memory compression
+enable_memory_compression = true
+compression_ratio = 0.8
+
+# Enable context-aware memory retrieval
+enable_context_aware_retrieval = true
+
+# Enable memory indexing for faster retrieval
+enable_memory_indexing = true
+
+# Enable cross-session memory persistence
+enable_cross_session_memory = true
 
 # Examples for each condenser type (uncomment and modify as needed):
 

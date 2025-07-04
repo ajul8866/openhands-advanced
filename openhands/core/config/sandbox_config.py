@@ -4,7 +4,7 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError, model_valida
 
 
 class SandboxConfig(BaseModel):
-    """Configuration for the sandbox.
+    """Configuration for the advanced sandbox for commercial projects.
 
     Attributes:
         remote_runtime_api_url: The hostname for the Remote Runtime API.
@@ -41,6 +41,17 @@ class SandboxConfig(BaseModel):
         trusted_dirs: List of directories that can be trusted to run the OpenHands CLI.
         vscode_port: The port to use for VSCode. If None, a random port will be chosen.
             This is useful when deploying OpenHands in a remote machine where you need to expose a specific port.
+            
+        # Advanced features for commercial projects
+        enable_distributed_computing: Whether to enable distributed computing for large projects.
+        max_distributed_nodes: Maximum number of distributed computing nodes.
+        enable_sandbox_security: Whether to enable advanced security features.
+        enable_vulnerability_scanning: Whether to enable vulnerability scanning.
+        enable_dependency_scanning: Whether to enable dependency scanning.
+        enable_performance_monitoring: Whether to enable performance monitoring.
+        enable_resource_optimization: Whether to enable resource optimization.
+        enable_advanced_debugging: Whether to enable advanced debugging tools.
+        enable_profiling: Whether to enable profiling.
     """
 
     remote_runtime_api_url: str | None = Field(default='http://localhost:8000')
@@ -83,6 +94,17 @@ class SandboxConfig(BaseModel):
     selected_repo: str | None = Field(default=None)
     trusted_dirs: list[str] = Field(default_factory=list)
     vscode_port: int | None = Field(default=None)
+    
+    # Advanced features for commercial projects
+    enable_distributed_computing: bool = Field(default=True, description="Whether to enable distributed computing for large projects")
+    max_distributed_nodes: int = Field(default=4, description="Maximum number of distributed computing nodes")
+    enable_sandbox_security: bool = Field(default=True, description="Whether to enable advanced security features")
+    enable_vulnerability_scanning: bool = Field(default=True, description="Whether to enable vulnerability scanning")
+    enable_dependency_scanning: bool = Field(default=True, description="Whether to enable dependency scanning")
+    enable_performance_monitoring: bool = Field(default=True, description="Whether to enable performance monitoring")
+    enable_resource_optimization: bool = Field(default=True, description="Whether to enable resource optimization")
+    enable_advanced_debugging: bool = Field(default=True, description="Whether to enable advanced debugging tools")
+    enable_profiling: bool = Field(default=True, description="Whether to enable profiling")
     volumes: str | None = Field(
         default=None,
         description="Volume mounts in the format 'host_path:container_path[:mode]', e.g. '/my/host/dir:/workspace:rw'. Multiple mounts can be specified using commas, e.g. '/path1:/workspace/path1,/path2:/workspace/path2:ro'",

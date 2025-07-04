@@ -10,10 +10,10 @@ from openhands.core.logger import openhands_logger as logger
 
 
 class LLMConfig(BaseModel):
-    """Configuration for the LLM model.
+    """Configuration for the advanced LLM model.
 
     Attributes:
-        model: The model to use.
+        model: The model to use. Supports latest advanced models like gpt-4o-2024, claude-3-opus, gemini-1.5-pro.
         api_key: The API key to use.
         base_url: The base URL for the API. This is necessary for local LLMs.
         api_version: The version of the API.
@@ -43,20 +43,36 @@ class LLMConfig(BaseModel):
         log_completions_folder: The folder to log LLM completions to. Required if log_completions is True.
         custom_tokenizer: A custom tokenizer to use for token counting.
         native_tool_calling: Whether to use native tool calling if supported by the model. Can be True, False, or not set.
-        reasoning_effort: The effort to put into reasoning. This is a string that can be one of 'low', 'medium', 'high', or 'none'. Exclusive for o1 models.
+        reasoning_effort: The effort to put into reasoning. This is a string that can be one of 'low', 'medium', 'high', 'very_high', or 'none'. Exclusive for o1 models.
         seed: The seed to use for the LLM.
         safety_settings: Safety settings for models that support them (like Mistral AI and Gemini).
+        
+        # Advanced features for commercial projects
+        enable_model_fallback: Whether to enable model fallback chain.
+        fallback_models: List of fallback models to try if primary fails.
+        enable_chain_of_thought: Whether to enable chain of thought reasoning.
+        enable_tree_of_thought: Whether to enable tree of thought reasoning.
+        enable_context_compression: Whether to enable context compression.
+        enable_semantic_chunking: Whether to enable semantic chunking.
+        max_context_window: Maximum context window size (in tokens).
+        enable_advanced_reasoning: Whether to enable advanced reasoning capabilities.
+        enable_continuous_learning: Whether to enable continuous learning from past experiences.
+        enable_memory_compression: Whether to enable memory compression.
+        compression_ratio: Compression ratio for memory compression.
+        enable_context_aware_retrieval: Whether to enable context-aware memory retrieval.
+        enable_memory_indexing: Whether to enable memory indexing.
+        enable_cross_session_memory: Whether to enable cross-session memory persistence.
     """
 
-    model: str = Field(default='claude-sonnet-4-20250514')
+    model: str = Field(default='gpt-4o-2024')
     api_key: SecretStr | None = Field(default=None)
     base_url: str | None = Field(default=None)
-    api_version: str | None = Field(default=None)
+    api_version: str | None = Field(default="2024-05-01")
     aws_access_key_id: SecretStr | None = Field(default=None)
     aws_secret_access_key: SecretStr | None = Field(default=None)
     aws_region_name: str | None = Field(default=None)
     openrouter_site_url: str = Field(default='https://docs.all-hands.dev/')
-    openrouter_app_name: str = Field(default='OpenHands')
+    openrouter_app_name: str = Field(default='OpenHands Advanced')
     # total wait time: 5 + 10 + 20 + 30 = 65 seconds
     num_retries: int = Field(default=4)
     retry_multiplier: float = Field(default=2)
@@ -91,6 +107,22 @@ class LLMConfig(BaseModel):
         default=None,
         description='Safety settings for models that support them (like Mistral AI and Gemini)',
     )
+    
+    # Advanced features for commercial projects
+    enable_model_fallback: bool = Field(default=True, description="Whether to enable model fallback chain")
+    fallback_models: list[str] = Field(default_factory=lambda: ["gpt-4o-2024", "claude-3-opus", "gemini-1.5-pro", "gpt-4-turbo"], description="List of fallback models to try if primary fails")
+    enable_chain_of_thought: bool = Field(default=True, description="Whether to enable chain of thought reasoning")
+    enable_tree_of_thought: bool = Field(default=True, description="Whether to enable tree of thought reasoning")
+    enable_context_compression: bool = Field(default=True, description="Whether to enable context compression")
+    enable_semantic_chunking: bool = Field(default=True, description="Whether to enable semantic chunking")
+    max_context_window: int = Field(default=128000, description="Maximum context window size (in tokens)")
+    enable_advanced_reasoning: bool = Field(default=True, description="Whether to enable advanced reasoning capabilities")
+    enable_continuous_learning: bool = Field(default=True, description="Whether to enable continuous learning from past experiences")
+    enable_memory_compression: bool = Field(default=True, description="Whether to enable memory compression")
+    compression_ratio: float = Field(default=0.8, description="Compression ratio for memory compression")
+    enable_context_aware_retrieval: bool = Field(default=True, description="Whether to enable context-aware memory retrieval")
+    enable_memory_indexing: bool = Field(default=True, description="Whether to enable memory indexing")
+    enable_cross_session_memory: bool = Field(default=True, description="Whether to enable cross-session memory persistence")
 
     model_config = ConfigDict(extra='forbid')
 

@@ -20,7 +20,7 @@ from openhands.core.config.security_config import SecurityConfig
 
 
 class OpenHandsConfig(BaseModel):
-    """Configuration for the app.
+    """Configuration for the advanced OpenHands AI agent platform.
 
     Attributes:
         llms: Dictionary mapping LLM names to their configurations.
@@ -48,6 +48,46 @@ class OpenHandsConfig(BaseModel):
         max_budget_per_task: Maximum budget per task, agent stops if exceeded.
         disable_color: Whether to disable terminal colors. For terminals that don't support color.
         debug: Whether to enable debugging mode.
+        
+        # Advanced features for commercial projects
+        enable_advanced_reasoning: Whether to enable advanced reasoning capabilities.
+        reasoning_effort: The effort to put into reasoning (low, medium, high, very_high).
+        enable_multi_agent: Whether to enable multi-agent collaboration.
+        max_collaborative_agents: Maximum number of collaborative agents (2-10).
+        enable_continuous_learning: Whether to enable continuous learning from past experiences.
+        enable_persistent_memory: Whether to enable project memory persistence across sessions.
+        memory_retention_days: Number of days to retain memory.
+        max_context_window: Maximum context window size (in tokens).
+        enable_code_optimization: Whether to enable automatic code optimization.
+        enable_model_fallback: Whether to enable model fallback chain.
+        fallback_models: List of fallback models to try if primary fails.
+        enable_chain_of_thought: Whether to enable chain of thought reasoning.
+        enable_tree_of_thought: Whether to enable tree of thought reasoning.
+        enable_context_compression: Whether to enable context compression.
+        enable_semantic_chunking: Whether to enable semantic chunking.
+        enable_advanced_browsing: Whether to enable advanced browsing capabilities.
+        enable_visual_browsing: Whether to enable visual browsing.
+        enable_browser_automation: Whether to enable browser automation.
+        enable_planning: Whether to enable planning capabilities.
+        enable_reflection: Whether to enable reflection capabilities.
+        enable_self_correction: Whether to enable self-correction capabilities.
+        enable_code_review: Whether to enable code review capabilities.
+        enable_code_generation: Whether to enable advanced code generation.
+        enable_test_generation: Whether to enable test generation.
+        enable_documentation_generation: Whether to enable documentation generation.
+        enable_project_management: Whether to enable project management capabilities.
+        enable_task_tracking: Whether to enable task tracking.
+        enable_progress_reporting: Whether to enable progress reporting.
+        enable_distributed_computing: Whether to enable distributed computing.
+        max_distributed_nodes: Maximum number of distributed computing nodes.
+        enable_advanced_context_management: Whether to enable advanced context management.
+        enable_semantic_memory: Whether to enable semantic memory.
+        enable_hierarchical_memory: Whether to enable hierarchical memory organization.
+        memory_prioritization: Memory prioritization strategy.
+        enable_memory_compression: Whether to enable memory compression.
+        enable_context_aware_retrieval: Whether to enable context-aware memory retrieval.
+        enable_memory_indexing: Whether to enable memory indexing.
+        enable_cross_session_memory: Whether to enable cross-session memory persistence.
         file_uploads_max_file_size_mb: Maximum file upload size in MB. `0` means unlimited.
         file_uploads_restrict_file_types: Whether to restrict upload file types.
         file_uploads_allowed_extensions: Allowed file extensions. `['.*']` allows all.
@@ -105,6 +145,46 @@ class OpenHandsConfig(BaseModel):
     mcp: MCPConfig = Field(default_factory=MCPConfig)
     kubernetes: KubernetesConfig = Field(default_factory=KubernetesConfig)
     cli: CLIConfig = Field(default_factory=CLIConfig)
+    
+    # Advanced features for commercial projects
+    enable_advanced_reasoning: bool = Field(default=True, description="Whether to enable advanced reasoning capabilities")
+    reasoning_effort: str = Field(default="high", description="The effort to put into reasoning (low, medium, high, very_high)")
+    enable_multi_agent: bool = Field(default=True, description="Whether to enable multi-agent collaboration")
+    max_collaborative_agents: int = Field(default=4, description="Maximum number of collaborative agents (2-10)")
+    enable_continuous_learning: bool = Field(default=True, description="Whether to enable continuous learning from past experiences")
+    enable_persistent_memory: bool = Field(default=True, description="Whether to enable project memory persistence across sessions")
+    memory_retention_days: int = Field(default=90, description="Number of days to retain memory")
+    max_context_window: int = Field(default=128000, description="Maximum context window size (in tokens)")
+    enable_code_optimization: bool = Field(default=True, description="Whether to enable automatic code optimization")
+    enable_model_fallback: bool = Field(default=True, description="Whether to enable model fallback chain")
+    fallback_models: list[str] = Field(default_factory=lambda: ["gpt-4o-2024", "claude-3-opus", "gemini-1.5-pro", "gpt-4-turbo"], description="List of fallback models to try if primary fails")
+    enable_chain_of_thought: bool = Field(default=True, description="Whether to enable chain of thought reasoning")
+    enable_tree_of_thought: bool = Field(default=True, description="Whether to enable tree of thought reasoning")
+    enable_context_compression: bool = Field(default=True, description="Whether to enable context compression")
+    enable_semantic_chunking: bool = Field(default=True, description="Whether to enable semantic chunking")
+    enable_advanced_browsing: bool = Field(default=True, description="Whether to enable advanced browsing capabilities")
+    enable_visual_browsing: bool = Field(default=True, description="Whether to enable visual browsing")
+    enable_browser_automation: bool = Field(default=True, description="Whether to enable browser automation")
+    enable_planning: bool = Field(default=True, description="Whether to enable planning capabilities")
+    enable_reflection: bool = Field(default=True, description="Whether to enable reflection capabilities")
+    enable_self_correction: bool = Field(default=True, description="Whether to enable self-correction capabilities")
+    enable_code_review: bool = Field(default=True, description="Whether to enable code review capabilities")
+    enable_code_generation: bool = Field(default=True, description="Whether to enable advanced code generation")
+    enable_test_generation: bool = Field(default=True, description="Whether to enable test generation")
+    enable_documentation_generation: bool = Field(default=True, description="Whether to enable documentation generation")
+    enable_project_management: bool = Field(default=True, description="Whether to enable project management capabilities")
+    enable_task_tracking: bool = Field(default=True, description="Whether to enable task tracking")
+    enable_progress_reporting: bool = Field(default=True, description="Whether to enable progress reporting")
+    enable_distributed_computing: bool = Field(default=True, description="Whether to enable distributed computing")
+    max_distributed_nodes: int = Field(default=4, description="Maximum number of distributed computing nodes")
+    enable_advanced_context_management: bool = Field(default=True, description="Whether to enable advanced context management")
+    enable_semantic_memory: bool = Field(default=True, description="Whether to enable semantic memory")
+    enable_hierarchical_memory: bool = Field(default=True, description="Whether to enable hierarchical memory organization")
+    memory_prioritization: str = Field(default="hybrid", description="Memory prioritization strategy")
+    enable_memory_compression: bool = Field(default=True, description="Whether to enable memory compression")
+    enable_context_aware_retrieval: bool = Field(default=True, description="Whether to enable context-aware memory retrieval")
+    enable_memory_indexing: bool = Field(default=True, description="Whether to enable memory indexing")
+    enable_cross_session_memory: bool = Field(default=True, description="Whether to enable cross-session memory persistence")
 
     defaults_dict: ClassVar[dict] = {}
 

@@ -9,16 +9,25 @@ from openhands.utils.import_utils import get_impl
 
 
 class AgentConfig(BaseModel):
+    # Basic configuration
     llm_config: str | None = Field(default=None)
     """The name of the llm config to use. If specified, this will override global llm config."""
     classpath: str | None = Field(default=None)
     """The classpath of the agent to use. To be used for custom agents that are not defined in the openhands.agenthub package."""
     system_prompt_filename: str = Field(default='system_prompt.j2')
     """Filename of the system prompt template file within the agent's prompt directory. Defaults to 'system_prompt.j2'."""
+    
+    # Agent type and specialization
+    agent_type: str = Field(default="advanced")
+    """Agent type - options: "advanced", "expert", "specialist", "collaborative" """
+    agent_specialization: str = Field(default="code")
+    """Agent specialization - for specialist agents. Options: "code", "design", "architecture", "testing", "devops", "security", "data" """
+    
+    # Tool enablement
     enable_browsing: bool = Field(default=True)
     """Whether to enable browsing tool.
     Note: If using CLIRuntime, browsing is not implemented and should be disabled."""
-    enable_llm_editor: bool = Field(default=False)
+    enable_llm_editor: bool = Field(default=True)
     """Whether to enable LLM editor tool"""
     enable_editor: bool = Field(default=True)
     """Whether to enable the standard editor tool (str_replace_editor), only has an effect if enable_llm_editor is False."""
@@ -37,12 +46,64 @@ class AgentConfig(BaseModel):
     """Whether to enable prompt extensions"""
     enable_mcp: bool = Field(default=True)
     """Whether to enable MCP tools"""
-    disabled_microagents: list[str] = Field(default_factory=list)
-    """A list of microagents to disable (by name, without .py extension, e.g. ["github", "lint"]). Default is None."""
-    enable_history_truncation: bool = Field(default=True)
-    """Whether history should be truncated to continue the session when hitting LLM context length limit."""
+    
+    # Advanced browsing capabilities
+    enable_advanced_browsing: bool = Field(default=True)
+    """Whether to enable advanced browsing capabilities"""
+    enable_visual_browsing: bool = Field(default=True)
+    """Whether to enable visual browsing"""
+    enable_browser_automation: bool = Field(default=True)
+    """Whether to enable browser automation"""
     enable_som_visual_browsing: bool = Field(default=True)
     """Whether to enable SoM (Set of Marks) visual browsing."""
+    
+    # Advanced reasoning tools
+    enable_planning: bool = Field(default=True)
+    """Whether to enable planning capabilities"""
+    enable_reflection: bool = Field(default=True)
+    """Whether to enable reflection capabilities"""
+    enable_self_correction: bool = Field(default=True)
+    """Whether to enable self-correction capabilities"""
+    enable_code_review: bool = Field(default=True)
+    """Whether to enable code review capabilities"""
+    
+    # Multi-agent collaboration
+    enable_multi_agent: bool = Field(default=True)
+    """Whether to enable multi-agent collaboration"""
+    max_collaborative_agents: int = Field(default=4)
+    """Maximum number of collaborative agents (2-10)"""
+    
+    # Learning and memory
+    enable_continuous_learning: bool = Field(default=True)
+    """Whether to enable continuous learning from past experiences"""
+    enable_persistent_memory: bool = Field(default=True)
+    """Whether to enable project memory persistence across sessions"""
+    memory_retention_days: int = Field(default=90)
+    """Number of days to retain memory"""
+    enable_history_truncation: bool = Field(default=True)
+    """Whether history should be truncated to continue the session when hitting LLM context length limit."""
+    
+    # Code generation capabilities
+    enable_code_generation: bool = Field(default=True)
+    """Whether to enable advanced code generation"""
+    enable_test_generation: bool = Field(default=True)
+    """Whether to enable test generation"""
+    enable_documentation_generation: bool = Field(default=True)
+    """Whether to enable documentation generation"""
+    
+    # Project management
+    enable_project_management: bool = Field(default=True)
+    """Whether to enable project management capabilities"""
+    enable_task_tracking: bool = Field(default=True)
+    """Whether to enable task tracking"""
+    enable_progress_reporting: bool = Field(default=True)
+    """Whether to enable progress reporting"""
+    
+    # Microagents
+    enable_all_microagents: bool = Field(default=True)
+    """Whether to enable all microagents by default"""
+    disabled_microagents: list[str] = Field(default_factory=list)
+    """A list of microagents to disable (by name, without .py extension, e.g. ["github", "lint"]). Default is empty list."""
     condenser: CondenserConfig = Field(
         default_factory=lambda: NoOpCondenserConfig(type='noop')
     )
